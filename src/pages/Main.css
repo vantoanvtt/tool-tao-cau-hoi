@@ -1,0 +1,33 @@
+.container {
+    display: flex;
+    flex-direction: row;
+    /* color: aqua;
+    height: 300px;
+    width: 500px; */
+    
+}
+
+.textarea-container {
+    width: 100%;
+}
+
+.create-question-container {
+    width: 50%;
+    height: 600px;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    justify-content: space-between;
+}
+
+.question-management-container {
+    width: 50%;
+    background-color: aqua;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+}
+
+.text-field-style {
+    width: 100%;
+}
