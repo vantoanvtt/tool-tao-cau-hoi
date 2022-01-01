@@ -1859,4 +1859,5 @@
         }
         requestAnimationFrame(animateTiles);
     };
+    
 });
