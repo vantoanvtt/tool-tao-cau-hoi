@@ -26,6 +26,23 @@ export const SetItem = ()=> {
         }
     },[])
 
+    const downloadAsTextFile = (input, fileName = "kichban.json") =>{
+        const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(typeof input === "string" ? input : JSON.stringify(input));
+        const dlAnchorElem = document.getElementById('downloadAnchorElem2');
+        dlAnchorElem.setAttribute("href",     dataStr     );
+        dlAnchorElem.setAttribute("download", fileName);
+        dlAnchorElem.click();
+    }
+    const exportJson = () => {
+        const questions = JSON.parse(localStorage.getItem('question-list'));
+        const features = JSON.parse(localStorage.getItem('feature')).map(fea=>JSON.parse(fea));
+        const tileSets = JSON.parse(localStorage.getItem('tileSets'));
+        const maps = JSON.parse(localStorage.getItem('maps'));
+        downloadAsTextFile({tileSets, maps, "question":questions, "define_item_map": [...features]});
+        localStorage.setItem('question-list', JSON.stringify([]));
+        localStorage.setItem('feature', JSON.stringify([]));
+    }
+
 
   return (
     <Box>
@@ -35,7 +52,8 @@ export const SetItem = ()=> {
             return <Item pos={pos} key={index} featureSet={featureSet}/>
           })
       }
-      <Button variant="contained" sx={{m:2}}>Hoàn tất</Button>
+      <Button variant="contained" sx={{m:2}} onClick={exportJson}>Hoàn tất</Button>
+      <a id="downloadAnchorElem2" style={{"display":"none"}}></a>
     </Box>
   );
 }
