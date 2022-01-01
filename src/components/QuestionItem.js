@@ -6,10 +6,10 @@ import './Questionitem.css';
 export default function QuestionItem({item, onTapDeleteIcon, onTapEditIcon}) {
     return (
         <div className='question-item-container'>
-            <p>{item.question}</p>
+            <p>{item.id}</p>
             <div className='icon-group'>
-                <EditIcon onClick={onTapEditIcon}/>
-                <DeleteOutlineIcon onClick={onTapDeleteIcon}/>
+                <EditIcon onClick={() => {onTapEditIcon()}}/>
+                <DeleteOutlineIcon onClick={() => {onTapDeleteIcon()}}/>
             </div>
             
         </div>
