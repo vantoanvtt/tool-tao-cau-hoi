@@ -9,6 +9,7 @@
         // @ts-ignore
         factory((root.TilemapEditor = {}));
     }
+// eslint-disable-next-line no-restricted-globals
 })(typeof self !== 'undefined' ? self : this, function (exports) {
     // Call once on element to add behavior, toggle on/off isDraggable attr to enable
     const draggable = ({element, onElement = null, isDrag = false, onDrag = null,
@@ -38,6 +39,7 @@
             isMouseDown = true;
         }
         const onMouseUp = () => {
+            // @ts-ignore
             if(!element.getAttribute("isDraggable") === "false") return;
             isMouseDown = false;
             elementX = parseInt(element.style.left) || 0;
@@ -209,7 +211,7 @@
         <div class="canvas_wrapper" id="canvas_wrapper">
           <canvas id="mapCanvas" width="${width}" height="${height}"></canvas>
           <div class="canvas_resizer" resizerdir="y"><input value="1" type="number" min="1" resizerdir="y"><span>-y-</span></div>
-          <div class="canvas_resizer vertical" resizerdir="x"><input value="${mapTileWidth}" type="number" min="1" resizerdir="x"><span>-x-</span></div>
+          <div class="canvas_resizer vertical" resizerdir="x"><input value="${mapTileWidth}" type="number" min="1" resizerdir="x" disabled><span>-x-</span></div>
         </div>
         </div>
       <div class="card_right-column layers">
@@ -254,7 +256,9 @@
     }
     const getEmptyLayer = (name="layer")=> ({tiles:{}, visible: true, name, animatedTiles: {}, opacity: 1});
     let tilesetImage, canvas, tilesetContainer, tilesetSelection, cropSize,
+        // @ts-ignore
         confirmBtn, tilesetGridContainer,
+        // @ts-ignore
         layersElement, resizingCanvas, mapTileHeight, mapTileWidth, tileDataSel,tileFrameSel,
         tilesetDataSel, mapsDataSel, objectParametersEditor;
 
@@ -300,6 +304,7 @@
         return { src, name, gridWidth, gridHeight, tileCount: gridWidth * gridHeight, tileData, symbolStartIdx,tileSize, tags, frames, description, width, height}
     }
 
+    // @ts-ignore
     const getSnappedPos = (pos) => (Math.round(pos / (SIZE_OF_CROP)) * (SIZE_OF_CROP));
     let selection = [{}];
     let currentLayer = 0;
@@ -338,10 +343,13 @@
                 </div>
             </div>
         `;
+        // @ts-ignore
         document.getElementById("layerOpacitySlider").value = maps[ACTIVE_MAP].layers[newLayer]?.opacity;
         document.getElementById("layerOpacitySlider").addEventListener("change", e =>{
             addToUndoStack();
+            // @ts-ignore
             document.getElementById("layerOpacitySliderValue").innerText = e.target.value;
+            // @ts-ignore
             maps[ACTIVE_MAP].layers[currentLayer].opacity = Number(e.target.value);
             draw();
             updateLayers();
@@ -387,14 +395,17 @@
 
         maps[ACTIVE_MAP].layers.forEach((_,index)=>{
             document.getElementById(`selectLayerBtn-${index}`).addEventListener("click",e=>{
+                // @ts-ignore
                 setLayer(e.target.getAttribute("tile-layer"));
                 addToUndoStack();
             })
             document.getElementById(`setLayerVisBtn-${index}`).addEventListener("click",e=>{
+                // @ts-ignore
                 setLayerIsVisible(e.target.getAttribute("vis-layer"))
                 addToUndoStack();
             })
             document.getElementById(`trashLayerBtn-${index}`).addEventListener("click",e=>{
+                // @ts-ignore
                 trashLayer(e.target.getAttribute("trash-layer"))
                 addToUndoStack();
             })
@@ -430,7 +441,9 @@
     const setActiveTool = (toolIdx) => {
         ACTIVE_TOOL = toolIdx;
         const actTool = document.getElementById("toolButtonsWrapper").querySelector(`input[id="tool${toolIdx}"]`);
+        // @ts-ignore
         if (actTool) actTool.checked = true;
+        // @ts-ignore
         document.getElementById("canvas_wrapper").setAttribute("isDraggable", ACTIVE_TOOL === TOOLS.PAN);
         draw();
     }
@@ -473,8 +486,11 @@
         const hideSymbols = !DISPLAY_SYMBOLS || shouldHideSymbols();
         const canvas = document.getElementById("tilesetCanvas");
         const img = TILESET_ELEMENTS[tilesetDataSel.value];
+        // @ts-ignore
         canvas.width = img.width * ZOOM;
+        // @ts-ignore
         canvas.height = img.height * ZOOM;
+        // @ts-ignore
         const ctx = canvas.getContext('2d');
         if (ZOOM !== 1){
             ctx.webkitImageSmoothingEnabled = false;
@@ -482,10 +498,14 @@
             ctx.msImageSmoothingEnabled = false;
             ctx.imageSmoothingEnabled = false;
         }
+        // @ts-ignore
         ctx.drawImage(img,0,0,canvas.width ,canvas.height);
+        // @ts-ignore
         console.log("WIDTH EXCEEDS?", canvas.width % SIZE_OF_CROP)
+        // @ts-ignore
         const tileSizeSeemsIncorrect = canvas.width % SIZE_OF_CROP !== 0;
         drawGrid(ctx.canvas.width, ctx.canvas.height, ctx,SIZE_OF_CROP * ZOOM, tileSizeSeemsIncorrect ? "red":"cyan");
+        // @ts-ignore
         Array.from({length: tileCount}, (x, i) => i).map(tile=>{
             if (viewMode === "frames") {
                 const frameData = getCurrentFrames();
@@ -694,6 +714,7 @@
         if (key in (maps[ACTIVE_MAP].layers[currentLayer].animatedTiles || {})) delete maps[ACTIVE_MAP].layers[currentLayer].animatedTiles[key];
     }
 
+    // @ts-ignore
     const isFlippedOnX = () => document.getElementById("toggleFlipX").checked;
     const addSelectedTiles = (key, tiles) => {
         const [x, y] = key.split("-");
@@ -751,6 +772,7 @@
 
     const fillEmptyOrSameTiles = (key) => {
         const pickedTile = maps[ACTIVE_MAP].layers[currentLayer].tiles[key];
+        // @ts-ignore
         Array.from({length: mapTileWidth * mapTileHeight}, (x, i) => i).map(tile=>{
             const x = tile % mapTileWidth;
             const y = Math.floor(tile / mapTileWidth);
@@ -794,6 +816,7 @@
             selection = [clicked];
 
             console.log("clicked", clicked, "entity data",editedEntity)
+            // @ts-ignore
             document.getElementById("toggleFlipX").checked = !!clicked?.isFlippedX;
             // TODO switch to different tileset if its from a different one
             // if(clicked.tilesetIdx !== tilesetDataSel.value) {
@@ -806,9 +829,13 @@
             return true;
         } else if (editedEntity){
             console.log("Animated tile found", editedEntity)
+            // @ts-ignore
             selection = editedEntity.tiles;
+            // @ts-ignore
             document.getElementById("toggleFlipX").checked = editedEntity.isFlippedX;
+            // @ts-ignore
             setLayer(editedEntity.layer);
+            // @ts-ignore
             tileFrameSel.value = editedEntity.name;
             updateSelection();
             selectMode("frames");
@@ -917,6 +944,7 @@
         draw(false);
         Object.values(analizedTiles).map((t) => {
             // Fill the heatmap
+            // @ts-ignore
             t.coords.forEach((c, i) => {
                 const fillStyle = `rgba(255, 0, 0, ${(1/t.times) - 0.35})`;
                 ctx.fillStyle = fillStyle;
@@ -994,7 +1022,9 @@
         const result = Object.entries(maps).map(([key, map])=>{
             const layers = map.layers;
             const flattenedData = Array(layers.length).fill([]).map(()=>{
+                // @ts-ignore
                 return Array(map.mapHeight).fill([]).map(row=>{
+                    // @ts-ignore
                     return Array(map.mapWidth).fill([]).map(column => ({
                         tile: null,
                         tileSymbol: " "// a space is an empty tile
@@ -1024,16 +1054,22 @@
             mapTileWidth = size?.mapWidth;
             WIDTH = mapTileWidth * SIZE_OF_CROP * ZOOM;
             maps[ACTIVE_MAP].mapWidth = mapTileWidth;
+            // @ts-ignore
             document.querySelector(".canvas_resizer[resizerdir='x']").style=`left:${WIDTH}px`;
+            // @ts-ignore
             document.querySelector(".canvas_resizer[resizerdir='x'] input").value = String(mapTileWidth);
+            // @ts-ignore
             document.getElementById("canvasWidthInp").value  = String(mapTileWidth);
         }
         if(size?.mapHeight && size?.mapHeight > 1){
             mapTileHeight = size?.mapHeight;
             HEIGHT = mapTileHeight * SIZE_OF_CROP * ZOOM;
             maps[ACTIVE_MAP].mapHeight = mapTileHeight;
+            // @ts-ignore
             document.querySelector(".canvas_resizer[resizerdir='y']").style=`top:${HEIGHT}px`;
+            // @ts-ignore
             document.querySelector(".canvas_resizer[resizerdir='y'] input").value = String(mapTileHeight);
+            // @ts-ignore
             document.getElementById("canvasHeightInp").value  = String(mapTileHeight);
         }
         draw();
@@ -1041,6 +1077,7 @@
 
     const setActiveMap =(id) =>{
         ACTIVE_MAP = id;
+        // @ts-ignore
         document.getElementById("gridColorSel").value = maps[ACTIVE_MAP].gridColor || "#00FFFF";
         draw();
         updateMapSize({mapWidth: maps[ACTIVE_MAP].mapWidth, mapHeight: maps[ACTIVE_MAP].mapHeight})
@@ -1157,6 +1194,7 @@
         if (!populateFrames) populateWithOptions(tileDataSel, tileSets[tilesetDataSel.value]?.tags, `<option value="">Symbols (${tileSets[tilesetDataSel.value]?.tileCount || "?"})</option><option value="frames">Objects</option>`);
         else populateWithOptions(tileFrameSel, tileSets[tilesetDataSel.value]?.frames, '');
 
+        // @ts-ignore
         document.getElementById("tileFrameCount").value = getCurrentFrames()?.frameCount || 1;
     }
 
@@ -1170,6 +1208,7 @@
             const gridHeight = Math.ceil(old.height / tileSize);
             const tileCount = gridWidth * gridHeight;
 
+            // @ts-ignore
             Array.from({length: tileCount}, (x, i) => i).map(tile=>{
                 const x = tile % gridWidth;
                 const y = Math.floor(tile / gridWidth);
@@ -1180,6 +1219,7 @@
                 }
                 tileSets[key] = {...old, tileSize, gridWidth, gridHeight, tileCount, symbolStartIdx, tileData};
             })
+            // @ts-ignore
             if(key === 0){
                 console.log({gridWidth,gridHeight,tileCount, tileSize})
             }
@@ -1196,6 +1236,7 @@
         });
         SIZE_OF_CROP = newSize;
         cropSize.value = SIZE_OF_CROP;
+        // @ts-ignore
         document.getElementById("gridCropSize").value = SIZE_OF_CROP;
         console.log("NEW SIZE", tilesetDataSel.value,tileSets[tilesetDataSel.value], newSize,ACTIVE_MAP, maps)
         updateZoom()
@@ -1213,11 +1254,13 @@
         // Use to prevent old data from erasure
         const oldTilesets = {...tileSets};
         tileSets = {};
+        // @ts-ignore
         let symbolStartIdx = 0;
         // Generate tileset data for each of the loaded images
         IMAGES.forEach((tsImage, idx)=>{
             const newOpt = document.createElement("option");
             newOpt.innerText = tsImage.name || `tileset ${idx}`;
+            // @ts-ignore
             newOpt.value = idx;
             tilesetDataSel.appendChild(newOpt);
             const tilesetImgElement = document.createElement("img");
@@ -1233,6 +1276,7 @@
                 TILESET_ELEMENTS.forEach((tsImage,idx)  => {
                     const tileSize = tsImage.tileSize || SIZE_OF_CROP;
                     tileSets[idx] = getEmptyTileSet(
+                        // @ts-ignore
                         {
                             tags: oldTilesets[idx]?.tags, frames: oldTilesets[idx]?.frames, tileSize,
                             src: tsImage.src, name: `tileset ${idx}`, width: tsImage.width, height: tsImage.height
@@ -1280,6 +1324,7 @@
             }
             setCropSize(tileSets[tilesetDataSel.value].tileSize);
             updateZoom();
+            // @ts-ignore
             document.querySelector('.canvas_resizer[resizerdir="x"]').style = `left:${WIDTH}px;`;
 
             if (undoStepPosition === -1) addToUndoStack();//initial undo stack entry
@@ -1298,6 +1343,7 @@
         });
         mapsDataSel.value = lastMap;
         setActiveMap(lastMap);
+        // @ts-ignore
         document.getElementById("removeMapBtn").disabled = Object.keys(maps).length === 1;
     }
     const loadData = (data) =>{
@@ -1312,6 +1358,7 @@
             reloadTilesets();
             tilesetDataSel.value = "0";
             cropSize.value = data ? tileSets[tilesetDataSel.value]?.tileSize || maps[ACTIVE_MAP].tileSize : SIZE_OF_CROP;
+            // @ts-ignore
             document.getElementById("gridCropSize").value = cropSize.value;
             updateMaps();
             updateMapSize({mapWidth: maps[ACTIVE_MAP].mapWidth, mapHeight: maps[ACTIVE_MAP].mapHeight})
@@ -1344,6 +1391,7 @@
         apiTileSetLoaders = tileSetLoaders || {};
         apiTileSetLoaders.base64 = {
             name: "Fs (as base64)",
+            // @ts-ignore
             onSelectImage: (setSrc, file, base64) => {
                 setSrc(base64);
             },
@@ -1371,6 +1419,7 @@
             onSelectFiles: (setData, files) => {
                 const readFile = new FileReader();
                 readFile.onload = (e) => {
+                    // @ts-ignore
                     const json = JSON.parse(e.target.result);
                     setData(json);
                 };
@@ -1433,6 +1482,7 @@
         }
         tilesetContainer.addEventListener('pointerup', (e) => {
             setTimeout(()=>{
+                // @ts-ignore
                 document.getElementById("tilesetDataDetails").open = false;
             },100);
 
@@ -1442,10 +1492,12 @@
             tileSelectStart = null;
 
             const viewMode = tileDataSel.value;
+            // @ts-ignore
             if(viewMode === "" && e.button === 2){
                 renameCurrentTileSymbol();
                 return;
             }
+            // @ts-ignore
             if (e.button === 0) {
                 if(viewMode !== "" && viewMode !== "frames"){
                     selection.forEach(selected=>{
@@ -1467,6 +1519,7 @@
                 updateTilesetGridContainer();
             }
         });
+        // @ts-ignore
         tilesetContainer.addEventListener('dblclick', (e) => {
             const viewMode = tileDataSel.value;
             if(viewMode === "") {
@@ -1481,6 +1534,7 @@
         mapsDataSel = document.getElementById("mapsDataSel");
         mapsDataSel.addEventListener("change", e=>{
             addToUndoStack();
+            // @ts-ignore
             setActiveMap(e.target.value);
             addToUndoStack();
         })
@@ -1489,6 +1543,7 @@
             const result = window.prompt("Enter new map key...", suggestMapName);
             if(result !== null) {
                 addToUndoStack();
+                // @ts-ignore
                 const newMapKey = result.trim().replaceAll(" ","_") || suggestMapName;
                 if (newMapKey in maps){
                     alert("A map with this key already exists.")
@@ -1546,7 +1601,9 @@
         });
         // Tileset frames
         tileFrameSel = document.getElementById("tileFrameSel");
+        // @ts-ignore
         tileFrameSel.addEventListener("change", e =>{
+            // @ts-ignore
             document.getElementById("tileFrameCount").value = getCurrentFrames()?.frameCount || 1;
             updateTilesetGridContainer();
         });
@@ -1557,6 +1614,7 @@
                     alert("Object already exists");
                     return;
                 }
+                // @ts-ignore
                 tileSets[tilesetDataSel.value].frames[result] = {frameCount: Number(document.getElementById("tileFrameCount").value)}
                 setFramesToSelection(result);
                 updateTilesetDataList(true);
@@ -1573,12 +1631,14 @@
         });
         document.getElementById("tileFrameCount").addEventListener("change", e=>{
             if(tileFrameSel.value === "") return;
+            // @ts-ignore
             getCurrentFrames().frameCount = Number(e.target.value);
             updateTilesetGridContainer();
         })
         // Tileset SELECT callbacks
         tilesetDataSel = document.getElementById("tilesetDataSel");
         tilesetDataSel.addEventListener("change",e=>{
+            // @ts-ignore
             tilesetImage.src = TILESET_ELEMENTS[e.target.value].src;
             tilesetImage.crossOrigin = "Anonymous";
             updateTilesetDataList();
@@ -1596,8 +1656,10 @@
         }
         // replace tileset
         document.getElementById("tilesetReplaceInput").addEventListener("change",e=>{
+            // @ts-ignore
             toBase64(e.target.files[0]).then(base64Src=>{
                 if (selectedTileSetLoader.onSelectImage) {
+                    // @ts-ignore
                     selectedTileSetLoader.onSelectImage(replaceSelectedTileSet, e.target.files[0], base64Src);
                 }
             })
@@ -1612,8 +1674,10 @@
         });
         // add tileset
         document.getElementById("tilesetReadInput").addEventListener("change",e=>{
+           // @ts-ignore
            toBase64(e.target.files[0]).then(base64Src=>{
                if (selectedTileSetLoader.onSelectImage) {
+                   // @ts-ignore
                    selectedTileSetLoader.onSelectImage(addNewTileSet, e.target.files[0], base64Src)
                }
             })
@@ -1634,9 +1698,12 @@
             tsLoaderOption.innerText = loader.name;
             tileSetLoadersSel.appendChild(tsLoaderOption);
         });
+        // @ts-ignore
         tileSetLoadersSel.value = "base64";
+        // @ts-ignore
         selectedTileSetLoader = apiTileSetLoaders[tileSetLoadersSel.value];
         tileSetLoadersSel.addEventListener("change", e=>{
+            // @ts-ignore
             selectedTileSetLoader = apiTileSetLoaders[e.target.value];
         })
         document.getElementById("removeTilesetBtn").addEventListener("click",()=>{
@@ -1660,9 +1727,11 @@
         });
         // Canvas Resizer ===================
         document.getElementById("canvasWidthInp").addEventListener("change", e=>{
+            // @ts-ignore
             updateMapSize({mapWidth: Number(e.target.value)})
         })
         document.getElementById("canvasHeightInp").addEventListener("change", e=>{
+            // @ts-ignore
             updateMapSize({mapHeight: Number(e.target.value)})
         })
         // draggable({
@@ -1677,19 +1746,25 @@
         // });
 
         document.querySelector(".canvas_resizer[resizerdir='y'] input").addEventListener("change", e=>{
+            // @ts-ignore
             updateMapSize({mapHeight: Number(e.target.value)})
         })
         document.querySelector(".canvas_resizer[resizerdir='x'] input").addEventListener("change", e=>{
+            // @ts-ignore
             updateMapSize({mapWidth: Number(e.target.value) })
         })
         document.getElementById("toolButtonsWrapper").addEventListener("click",e=>{
+            // @ts-ignore
             console.log("ACTIVE_TOOL", e.target.value)
+            // @ts-ignore
             if(e.target.getAttribute("name") === "tool") setActiveTool(Number(e.target.value));
         })
         document.getElementById("gridCropSize").addEventListener('change', e=>{
+            // @ts-ignore
             setCropSize(Number(e.target.value));
         })
         cropSize.addEventListener('change', e=>{
+            // @ts-ignore
             setCropSize(Number(e.target.value));
         })
 
@@ -1716,6 +1791,7 @@
             menuItem.className = "item";
             menuItem.innerText = name;
             menuItem.title = description || name;
+            // @ts-ignore
             menuItem.value = value;
             fileMenuDropDown.appendChild(menuItem);
             return menuItem;
@@ -1734,6 +1810,7 @@
                     if(importer.acceptFile) input.accept = importer.acceptFile;
                     input.style.display = "none";
                     input.addEventListener("change",e=> {
+                        // @ts-ignore
                         importer.onSelectFiles(loadData, e.target.files);
                     })
                     input.click();
@@ -1741,6 +1818,7 @@
             }
         })
         document.getElementById("toggleFlipX").addEventListener("change",(e)=>{
+            // @ts-ignore
             document.getElementById("flipBrushIndicator").style.transform = e.target.checked ? "scale(-1, 1)": "scale(1, 1)"
         })
         document.addEventListener('keypress', e =>{
@@ -1750,11 +1828,14 @@
             }
         })
         document.getElementById("gridColorSel").addEventListener("change", e=>{
+            // @ts-ignore
             console.log("grid col",e.target.value)
+            // @ts-ignore
             maps[ACTIVE_MAP].gridColor = e.target.value;
             draw();
         })
         document.getElementById("showGrid").addEventListener("change", e => {
+            // @ts-ignore
             SHOW_GRID = e.target.checked;
             draw();
         })

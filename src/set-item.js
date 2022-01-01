@@ -1,6 +1,6 @@
 //import { getLayers } from "./tilemap-editor";
 
-printItemLayer = () => {
+const printItemLayer = () => {
     console.log('hákdfhksjdh');
 }
 

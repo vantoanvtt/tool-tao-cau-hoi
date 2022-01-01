@@ -3,10 +3,14 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import { QuestionProvider } from './context/QuestionContext';
+
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <QuestionProvider>
+      <App />
+    </QuestionProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );
