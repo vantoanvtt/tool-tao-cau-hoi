@@ -5,6 +5,11 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { QuestionProvider } from './context/QuestionContext';
 
+if ('serviceWorker' in navigator && process.env.NODE_ENV === 'production') {
+  window.addEventListener('load', function() {
+      navigator.serviceWorker.register('/service-worker.js');
+  });
+}
 
 ReactDOM.render(
     <QuestionProvider>

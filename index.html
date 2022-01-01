@@ -363,67 +363,6 @@
     } else {
       initTilemapEditor()
     }
-    // Pwa stuff
-    let newWorker;
-    function showUpdateBar() {
-      let snackbar = document.getElementById('snackbar');
-      snackbar.className = 'show';
-    }
-    // The click event on the pop up notification
-    document.getElementById('reload').addEventListener('click', function(){
-      newWorker.postMessage({ action: 'skipWaiting' });
-    });
-
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('/tilemap-editor/sw.js').then(reg => {
-        console.log('Service Worker Registered');
-        reg.addEventListener('updatefound', () => {
-          // A wild service worker has appeared in reg.installing!
-          newWorker = reg.installing;
-
-          newWorker.addEventListener('statechange', () => {
-            // Has network.state changed?
-            switch (newWorker.state) {
-              case 'installed':
-                if (navigator.serviceWorker.controller) {
-                  showUpdateBar();
-                }
-                break;
-            }
-          });
-        });
-      });
-    }
-    let refreshing;
-    navigator.serviceWorker.addEventListener('controllerchange', function () {
-      if (refreshing) return;
-      window.location.reload();
-      refreshing = true;
-    });
-
-    let deferredPrompt;
-    const addBtn = document.getElementById("addPwaBtn");
-    addBtn.style.display = 'none';
-    window.addEventListener('beforeinstallprompt', (e) => {
-      e.preventDefault();
-      deferredPrompt = e;
-      addBtn.style.display = 'block';
-      addBtn.addEventListener('click', () => {
-        addBtn.style.display = 'none';
-        deferredPrompt.prompt();
-        deferredPrompt.userChoice.then((choiceResult) => {
-          if (choiceResult.outcome === 'accepted') {
-            console.log('User accepted the A2HS prompt');
-          }
-          deferredPrompt = null;
-        });
-      });
-    });
-    window.addEventListener('appinstalled', () => {
-      addBtn.style.display = 'none';
-      deferredPrompt = null;
-      console.log('PWA was installed');
-    });
 
   </script>
 
