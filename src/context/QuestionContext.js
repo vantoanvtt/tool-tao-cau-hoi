@@ -1,9 +1,14 @@
-import React, { createContext, useState } from 'react';
+import React, { createContext, useEffect, useState } from 'react';
 const QuestionContext = createContext();
 // Provide Context
 export const QuestionProvider = ({ children }) => {
-  const [questionList, setQuestionList] = useState([]);
+  const questionInLocalStorage = JSON.parse(localStorage.getItem('question-list'))
+  const [questionList, setQuestionList] = useState(questionInLocalStorage ? questionInLocalStorage : []);
   const [type, setType] = React.useState('trac_nghiem');
+
+  useEffect(()=>{
+    localStorage.setItem('question-list', JSON.stringify(questionList));
+  },[questionList])
 
 
     function addQuestion(currentQuestion) {
