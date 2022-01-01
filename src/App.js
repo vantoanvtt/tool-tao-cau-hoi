@@ -5,6 +5,7 @@ import Main from './pages/Main.js';
 import {QuestionProvider} from './context/QuestionContext';
 import MapCreate from './MapCreate';
 import SetItem from './SetItem';
+import {Route, BrowserRouter, Routes} from 'react-router-dom';
 import {   
   Box, 
   Tab, 
