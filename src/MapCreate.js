@@ -2169,17 +2169,6 @@ export default function MapCreate() {
       return temp.slice(0);
     })
     .then(temp=>{
-<<<<<<< HEAD:src/MapCreate.js
-      const script = document.createElement('script');
-        console.log('adddd')
-      script.async = true;
-      script.innerHTML = temp.toString();
-
-      console.log(script);
-      if (count == 0) document.body.appendChild(script);
-
-      return;
-=======
         if (!document.querySelector('.map-script')) {
             console.log(document.querySelector('.map-script'));
             const script = document.createElement('script');
@@ -2188,7 +2177,6 @@ export default function MapCreate() {
             
             document.body.appendChild(script);
         }
->>>>>>> 476d98a7c57717683a6daa9eec5f554f7f309d79:src/MapCreate.jsx
     })
   })
 

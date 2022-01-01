@@ -2,7 +2,7 @@
     height: 20px;
     display: flex;
     flex-direction: row;
-    border: 1px solid rgb(73, 70, 70);
+    border: 1px solid white;
     border-radius: 5px;
     width: 100%;
     justify-content: space-between;
@@ -10,11 +10,37 @@
     padding: 16px;
     width: 95%;
     margin-bottom: 20px;
+    color: white;
 }
 
+.right-group {
+    display: flex;
+    flex-direction: row;
+    width: 160px;
+    justify-content: space-between;
+    align-items: center;
+}
 .icon-group {
     display: flex;
     flex-direction: row;
-    width: 55px;
+    width: 50px;
     justify-content: space-between;
+    align-items: center;
+}
+
+.lable1 {
+    display: flex;
+    align-items: center;
+    color: white;
+    border-radius: 10px;
+    padding: 5px;
+    border: 1px solid white;
+    /* height: 15px; */
+}
+
+.text-content {
+    white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 65%;
 }
