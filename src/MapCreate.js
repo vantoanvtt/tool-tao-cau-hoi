@@ -337,6 +337,8 @@ export default function MapCreate() {
     })(typeof self !== 'undefined' ? self : this, function (exports) {
         setInterval(()=>{
             localStorage.setItem('layers', JSON.stringify(maps[ACTIVE_MAP].layers.filter(layers=>layers.name == 'item-road')[0]))
+            localStorage.setItem('tileSets', JSON.stringify(tileSets));
+            localStorage.setItem('maps', JSON.stringify(maps))
         }, 1000)
         console.log("js inited");
         // Call once on element to add behavior, toggle on/off isDraggable attr to enable
@@ -1223,7 +1225,7 @@ export default function MapCreate() {
         }
         const exportJson = () => {
             const questions = JSON.parse(localStorage.getItem('question-list'));
-            const features = JSON.parse(localStorage.getItem('feature'));
+            const features = JSON.parse(localStorage.getItem('feature')).map(fea=>JSON.parse(fea));
             downloadAsTextFile({tileSets, maps, "question":questions, "define_item_map": [...features]});
             localStorage.setItem('question-list', JSON.stringify([]));
             localStorage.setItem('feature', JSON.stringify([]));
