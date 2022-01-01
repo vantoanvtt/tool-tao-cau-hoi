@@ -1,6 +1,7 @@
 .container {
     display: flex;
     flex-direction: row;
+    position: relative;
     /* color: aqua;
     height: 300px;
     width: 500px; */
@@ -30,4 +31,11 @@
 
 .text-field-style {
     width: 100%;
+}
+
+.route-to-map-btn {
+    text-decoration: none;
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
 }

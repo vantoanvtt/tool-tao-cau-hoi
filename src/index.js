@@ -12,11 +12,11 @@ if ('serviceWorker' in navigator && process.env.NODE_ENV === 'production') {
 }
 
 ReactDOM.render(
-  <React.StrictMode>
+  <>
     <QuestionProvider>
       <App />
     </QuestionProvider>
-  </React.StrictMode>,
+  </>,
   document.getElementById('root')
 );
 
