@@ -19,9 +19,9 @@ function App() {
 };
 
   return (
-    <Box sx={{ width: '100%', typography: 'body1' }}>
+    <Box sx={{ width: '100%', typography: 'body1', p: 0 }}>
       <TabContext value={tabIndex}>
-          <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+          <Box sx={{ borderBottom: 1, borderColor: 'divider', p:0 }}>
               <TabList onChange={handleChangeTab} aria-label="lab API tabs example">
                   <Tab label="Thêm câu hỏi" value="main" />
                   <Tab label="Tạo bản đồ" value="mapcreate" />
@@ -31,7 +31,7 @@ function App() {
               <Main
               />
           </TabPanel>
-          <TabPanel value="mapcreate">
+          <TabPanel value="mapcreate" sx={{p:0}}>
               <MapCreate/>
           </TabPanel>
       </TabContext>
