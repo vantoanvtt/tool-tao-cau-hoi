@@ -16,7 +16,7 @@ import QuestionContext from '../context/QuestionContext';
 export default function TracNghiemContainer({question}) {
     const [questionA, setQuestionA] = React.useState(question == null?'': question.question);
     const [suggestion, setSuggestion] = React.useState(question == null?'': question.suggestion);
-    const [answer, setAnswer] = React.useState(question == null? null : question.answer);
+    const [answer, setAnswer] = React.useState(question == null? '' : question.answer);
     const [firstAnswer, setFirstAnswer] = React.useState(question == null?'': question.firstAnswer);
     const [secondAnswer, setSecondAnswer] = React.useState(question == null?'': question.secondAnswer);
     const [thirdAnswer, setThirdAnswer] = React.useState(question == null?'': question.thirdAnswer);
@@ -119,7 +119,8 @@ export default function TracNghiemContainer({question}) {
                 <FormControl fullWidth>
                     <InputLabel id="answer-select">Chọn câu trả lời</InputLabel>
                     <Select
-                        labelId="demo-simple-select-label"
+                        labelId="d
+                        emo-simple-select-label"
                         id="answer-select"
                         value={answer}
                         label="Câu trả lời"
@@ -127,8 +128,8 @@ export default function TracNghiemContainer({question}) {
                     >
                         <MenuItem value={1}>Câu số 1</MenuItem>
                         <MenuItem value={2}>Câu số 2</MenuItem>
-                        <MenuItem value={3}>câu số 3</MenuItem>
-                        <MenuItem value={4}>câu số 4</MenuItem>
+                        <MenuItem value={3}>Câu số 3</MenuItem>
+                        <MenuItem value={4}>Câu số 4</MenuItem>
                     </Select>
                 </FormControl>
                 <Button 

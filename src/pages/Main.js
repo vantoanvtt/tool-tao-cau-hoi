@@ -1,4 +1,4 @@
-import React,{ useContext } from 'react';
+import React,{ useContext, useEffect } from 'react';
 import { 
     FormControl, 
     Select, 
@@ -9,7 +9,8 @@ import {
     DialogActions,
     DialogContent,
     DialogContentText,
-    DialogTitle
+    DialogTitle,
+    ButtonBase
     } from '@mui/material';
 import './Main.css';
 import QuestionItem from '../components/QuestionItem';
@@ -17,6 +18,7 @@ import QuestionContext from '../context/QuestionContext';
 import XepHinhContainer from '../components/XepHinhContainer';
 import TracNghiemContainer from '../components/TracNghiemContainer';
 import ScanContainer from '../components/ScanContainer';
+import { Link } from 'react-router-dom';
 
 export default function Main() {
 
@@ -44,6 +46,10 @@ export default function Main() {
         else if (questionContext.type == 'xep_hinh') return <XepHinhContainer question={question}/>
         else return <ScanContainer question={question} />
     }
+
+    useEffect(()=>{
+        return () => console.log("question unmouted");
+    },[])
 
     return (
         <div className="container">
@@ -110,6 +116,9 @@ export default function Main() {
                     </Button>
                 </DialogActions>
             </Dialog>
+            <Link to='/mapcreate' target={'_blank'} className='route-to-map-btn'>
+                <Button variant="contained">Tạo bản đồ</Button>
+            </Link>
         </div>
     );
 }
