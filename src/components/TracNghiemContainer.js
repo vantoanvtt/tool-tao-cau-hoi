@@ -23,6 +23,7 @@ export default function TracNghiemContainer({question}) {
     const [fourthAnswer, setFourthAnswer] = React.useState(question == null?'': question.fourthAnswer);
     const [tabIndex, setTabIndex] = React.useState("firstAnswer");
 
+
     const questionContext = useContext(QuestionContext);
 
     const handleChange = (event, setValue) => {
@@ -32,6 +33,7 @@ export default function TracNghiemContainer({question}) {
     const handleChangeTab = (event, newTabIndex) => {
         setTabIndex(newTabIndex);
     };
+
 
     return (
         <div className='container' style={{
@@ -119,8 +121,7 @@ export default function TracNghiemContainer({question}) {
                 <FormControl fullWidth>
                     <InputLabel id="answer-select">Chọn câu trả lời</InputLabel>
                     <Select
-                        labelId="d
-                        emo-simple-select-label"
+                        labelId="demo-simple-select-label"
                         id="answer-select"
                         value={answer}
                         label="Câu trả lời"
@@ -128,8 +129,8 @@ export default function TracNghiemContainer({question}) {
                     >
                         <MenuItem value={1}>Câu số 1</MenuItem>
                         <MenuItem value={2}>Câu số 2</MenuItem>
-                        <MenuItem value={3}>Câu số 3</MenuItem>
-                        <MenuItem value={4}>Câu số 4</MenuItem>
+                        <MenuItem value={3}>câu số 3</MenuItem>
+                        <MenuItem value={4}>câu số 4</MenuItem>
                     </Select>
                 </FormControl>
                 <Button 
