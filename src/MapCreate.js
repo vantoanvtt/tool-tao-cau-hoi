@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import './tilemap-editor'
 import './styles.css'
-
+import { useNavigate } from 'react-router-dom';
 
 
 
@@ -322,7 +322,6 @@ export default function MapCreate() {
 
 
   useEffect(()=>{
-      console.log("mounted");
 // @ts-check
     (function (root, factory) {
         // @ts-ignore
@@ -336,6 +335,9 @@ export default function MapCreate() {
         }
     // eslint-disable-next-line no-restricted-globals
     })(typeof self !== 'undefined' ? self : this, function (exports) {
+        setInterval(()=>{
+            localStorage.setItem('layers', JSON.stringify(maps[ACTIVE_MAP].layers.filter(layers=>layers.name == 'item-road')[0]))
+        }, 1000)
         console.log("js inited");
         // Call once on element to add behavior, toggle on/off isDraggable attr to enable
         const draggable = ({element, onElement = null, isDrag = false, onDrag = null,
@@ -397,6 +399,7 @@ export default function MapCreate() {
             reader.onerror = error => reject(error);
         });
         const decoupleReferenceFromObj = (obj) => JSON.parse(JSON.stringify(obj));
+        
         const getHtml = (width, height) =>{
             return `
         <div id="tilemapjs_root" class="card tilemapjs_root">
@@ -426,6 +429,9 @@ export default function MapCreate() {
                     </div>
                 </div>
             </div>
+
+            <a href='/setitem' target="_blank">Cài đặt tính năng</a>
+
             <div>
                 <div id="toolButtonsWrapper" class="tool_wrapper">             
                 <input id="tool0" type="radio" value="0" name="tool" checked class="hidden"/>
@@ -708,6 +714,7 @@ export default function MapCreate() {
         }
 
         const updateLayers = () => {
+            
             layersElement.innerHTML = maps[ACTIVE_MAP].layers.map((layer, index)=>{
                 return `
                 <div class="layer">
@@ -1207,7 +1214,7 @@ export default function MapCreate() {
             addToUndoStack();
         }
 
-        const downloadAsTextFile = (input, fileName = "tilemap-editor.json") =>{
+        const downloadAsTextFile = (input, fileName = "kichban.json") =>{
             const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(typeof input === "string" ? input : JSON.stringify(input));
             const dlAnchorElem = document.getElementById('downloadAnchorElem');
             dlAnchorElem.setAttribute("href",     dataStr     );
@@ -1215,7 +1222,11 @@ export default function MapCreate() {
             dlAnchorElem.click();
         }
         const exportJson = () => {
-            downloadAsTextFile({tileSets, maps});
+            const questions = JSON.parse(localStorage.getItem('question-list'));
+            const features = JSON.parse(localStorage.getItem('feature'));
+            downloadAsTextFile({tileSets, maps, "question":questions, "define_item_map": [...features]});
+            localStorage.setItem('question-list', JSON.stringify([]));
+            localStorage.setItem('feature', JSON.stringify([]));
         }
 
         const exportImage = () => {

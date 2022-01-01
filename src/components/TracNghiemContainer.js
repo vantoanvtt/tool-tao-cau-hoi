@@ -129,8 +129,8 @@ export default function TracNghiemContainer({question}) {
                     >
                         <MenuItem value={1}>Câu số 1</MenuItem>
                         <MenuItem value={2}>Câu số 2</MenuItem>
-                        <MenuItem value={3}>câu số 3</MenuItem>
-                        <MenuItem value={4}>câu số 4</MenuItem>
+                        <MenuItem value={3}>Câu số 3</MenuItem>
+                        <MenuItem value={4}>Câu số 4</MenuItem>
                     </Select>
                 </FormControl>
                 <Button 
