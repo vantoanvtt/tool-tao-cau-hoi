@@ -7,11 +7,9 @@ import { QuestionProvider } from './context/QuestionContext';
 
 
 ReactDOM.render(
-  <React.StrictMode>
     <QuestionProvider>
       <App />
-    </QuestionProvider>
-  </React.StrictMode>,
+    </QuestionProvider>,
   document.getElementById('root')
 );
 

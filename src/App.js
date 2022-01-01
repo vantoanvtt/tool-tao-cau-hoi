@@ -3,8 +3,8 @@ import logo from './logo.svg';
 import './App.css';
 import Main from './pages/Main.js';
 import {QuestionProvider} from './context/QuestionContext';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import MapCreate from './MapCreate';
+import SetItem from './SetItem';
 import {   
   Box, 
   Tab, 
@@ -25,6 +25,7 @@ function App() {
               <TabList onChange={handleChangeTab} aria-label="lab API tabs example">
                   <Tab label="Thêm câu hỏi" value="main" />
                   <Tab label="Tạo bản đồ" value="mapcreate" />
+                  <Tab label="Set item" value="set-item" />
               </TabList>
           </Box>
           <TabPanel value="main">
@@ -33,6 +34,9 @@ function App() {
           </TabPanel>
           <TabPanel value="mapcreate">
               <MapCreate/>
+          </TabPanel>
+          <TabPanel value="set-item">
+              <SetItem/>
           </TabPanel>
       </TabContext>
   </Box>

@@ -1870,12 +1870,12 @@ console.log(maps);
 
 export default function MapCreate() {
 
-  const [count, setCount] = useState(0);
-
+  let count = 0;
+ 
   (() => {
     console.log("Count: ", count)
     if (count != 0) return;
-    setCount(1);
+    count = 1;
     const promise = new Promise(resolve => {resolve()})
 
     promise.then(()=>{
@@ -2237,7 +2237,7 @@ export default function MapCreate() {
     })
     .then(temp=>{
       const script = document.createElement('script');
-
+        console.log('adddd')
       script.async = true;
       script.innerHTML = temp.toString();
 
