@@ -74,7 +74,7 @@ const Item = ({pos, featureSet}) => {
     const [tileSymbol, tileSetIdx] = getSymbol(pos);
     const tempObj = {
         tileSymbol: tileSymbol,
-        tileSetIdx: tileSetIdx,
+        "tilesetIdx": tileSetIdx,
         effect: e.target.value
     }
     featureSet.add(JSON.stringify(tempObj));
