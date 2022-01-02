@@ -74,7 +74,7 @@ const Item = ({pos, featureSet}) => {
     const [tileSymbol, tileSetIdx] = getSymbol(pos);
     const tempObj = {
         tileSymbol: tileSymbol,
-        tileSetIdx: tileSetIdx,
+        tilesetIdx: tileSetIdx,
         effect: e.target.value
     }
     featureSet.add(JSON.stringify(tempObj));
@@ -94,7 +94,7 @@ const Item = ({pos, featureSet}) => {
           onChange={handleChange}
         >
           <MenuItem value={'foward 3'}>Tịnh tiến</MenuItem>
-          <MenuItem value={'back_forward -3'}>Lùi</MenuItem>
+          <MenuItem value={'back_forward 3'}>Lùi</MenuItem>
           <MenuItem value={'tele 1'}>Dịch chuyển tiến</MenuItem>
           <MenuItem value={'tele -1'}>Dịch chuyển lùi</MenuItem>
         </Select>

@@ -71,8 +71,8 @@ export default function ScanContainer({question}) {
                             questionContext.addQuestion({
                                 id: Date.now().toString(),
                                 type: questionContext.type,
-                                description: description,
-                                suggestion: suggestion,
+                                desc: description,
+                                suggest: suggestion,
                                 correct_answer: answer, 
                             });
                             }}

@@ -57,8 +57,8 @@ export default function XepHinhContainer({question}) {
                             questionContext.addQuestion({
                                 id: Date.now().toString(),
                                 type: questionContext.type,
-                                description: description,
-                                imageId: imageId,
+                                desc: description,
+                                image_id: imageId,
                             });
                             }}
                 >

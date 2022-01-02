@@ -127,10 +127,10 @@ export default function TracNghiemContainer({question}) {
                         label="Câu trả lời"
                         onChange={(event) => handleChange(event, setAnswer)}
                     >
-                        <MenuItem value={1}>Câu số 1</MenuItem>
-                        <MenuItem value={2}>Câu số 2</MenuItem>
-                        <MenuItem value={3}>Câu số 3</MenuItem>
-                        <MenuItem value={4}>Câu số 4</MenuItem>
+                        <MenuItem value={0}>Câu số 1</MenuItem>
+                        <MenuItem value={1}>Câu số 2</MenuItem>
+                        <MenuItem value={2}>Câu số 3</MenuItem>
+                        <MenuItem value={3}>Câu số 4</MenuItem>
                     </Select>
                 </FormControl>
                 <Button 
@@ -143,7 +143,7 @@ export default function TracNghiemContainer({question}) {
                                 id: Date.now().toString(),
                                 type: questionContext.type,
                                 question: questionA,
-                                suggestion: suggestion,
+                                suggest: suggestion,
                                 answer: answer,
                                 selects: [firstAnswer, secondAnswer, thirdAnswer, fourthAnswer]
                             });
