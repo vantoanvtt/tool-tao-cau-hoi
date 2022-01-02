@@ -1736,10 +1736,7 @@ export default function MapCreate() {
                 name: "Xuất bản đồ dưới dạng ảnh",
                 transformer: exportImage
             }
-            apiTileMapExporters.saveData = {
-                name: "Xuất bản đồ dưới dạng JSON",
-                transformer: exportJson
-            }
+           
             apiTileMapImporters = tileMapImporters;
             apiTileMapImporters.openData = {
                 name: "Mở tệp JSON",
