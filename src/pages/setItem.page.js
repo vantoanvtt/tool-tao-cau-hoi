@@ -26,7 +26,7 @@ export const SetItem = ()=> {
         }
     },[])
 
-    const downloadAsTextFile = (input, fileName = "kichban.json") =>{
+    const downloadAsTextFile = (input, fileName = "kichban.trealet") =>{
         const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(typeof input === "string" ? input : JSON.stringify(input));
         const dlAnchorElem = document.getElementById('downloadAnchorElem2');
         dlAnchorElem.setAttribute("href",     dataStr     );
@@ -38,7 +38,7 @@ export const SetItem = ()=> {
         const features = JSON.parse(localStorage.getItem('feature')).map(fea=>JSON.parse(fea));
         const tileSets = JSON.parse(localStorage.getItem('tileSets'));
         const maps = JSON.parse(localStorage.getItem('maps'));
-        downloadAsTextFile({tileSets, maps, "question":questions, "define_item_map": [...features]});
+        downloadAsTextFile({tileSets, maps, "questions":questions, "define_item_map": [...features]});
         localStorage.setItem('question-list', JSON.stringify([]));
         localStorage.setItem('feature', JSON.stringify([]));
     }
@@ -74,7 +74,7 @@ const Item = ({pos, featureSet}) => {
     const [tileSymbol, tileSetIdx] = getSymbol(pos);
     const tempObj = {
         tileSymbol: tileSymbol,
-        "tilesetIdx": tileSetIdx,
+        tilesetIdx: tileSetIdx,
         effect: e.target.value
     }
     featureSet.add(JSON.stringify(tempObj));
@@ -95,8 +95,8 @@ const Item = ({pos, featureSet}) => {
         >
           <MenuItem value={'foward 3'}>Tịnh tiến</MenuItem>
           <MenuItem value={'back_forward 3'}>Lùi</MenuItem>
-          <MenuItem value={'tele 3'}>Dịch chuyển tiến</MenuItem>
-          <MenuItem value={'tele -3'}>Dịch chuyển lùi</MenuItem>
+          <MenuItem value={'tele 1'}>Dịch chuyển tiến</MenuItem>
+          <MenuItem value={'tele -1'}>Dịch chuyển lùi</MenuItem>
         </Select>
       </FormControl>
     </Box>

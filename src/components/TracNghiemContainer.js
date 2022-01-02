@@ -17,10 +17,10 @@ export default function TracNghiemContainer({question}) {
     const [questionA, setQuestionA] = React.useState(question == null?'': question.question);
     const [suggestion, setSuggestion] = React.useState(question == null?'': question.suggestion);
     const [answer, setAnswer] = React.useState(question == null? '' : question.answer);
-    const [firstAnswer, setFirstAnswer] = React.useState(question == null?'': question.firstAnswer);
-    const [secondAnswer, setSecondAnswer] = React.useState(question == null?'': question.secondAnswer);
-    const [thirdAnswer, setThirdAnswer] = React.useState(question == null?'': question.thirdAnswer);
-    const [fourthAnswer, setFourthAnswer] = React.useState(question == null?'': question.fourthAnswer);
+    const [firstAnswer, setFirstAnswer] = React.useState(question == null?'': question.selects[0]);
+    const [secondAnswer, setSecondAnswer] = React.useState(question == null?'': question.selects[1]);
+    const [thirdAnswer, setThirdAnswer] = React.useState(question == null?'': question.selects[2]);
+    const [fourthAnswer, setFourthAnswer] = React.useState(question == null?'': question.selects[3]);
     const [tabIndex, setTabIndex] = React.useState("firstAnswer");
 
 
@@ -127,25 +127,25 @@ export default function TracNghiemContainer({question}) {
                         label="Câu trả lời"
                         onChange={(event) => handleChange(event, setAnswer)}
                     >
-                        <MenuItem value={1}>Câu số 1</MenuItem>
-                        <MenuItem value={2}>Câu số 2</MenuItem>
-                        <MenuItem value={3}>Câu số 3</MenuItem>
-                        <MenuItem value={4}>Câu số 4</MenuItem>
+                        <MenuItem value={0}>Câu số 1</MenuItem>
+                        <MenuItem value={1}>Câu số 2</MenuItem>
+                        <MenuItem value={2}>Câu số 3</MenuItem>
+                        <MenuItem value={3}>Câu số 4</MenuItem>
                     </Select>
                 </FormControl>
                 <Button 
                     variant="contained" 
                     onClick={() => {
+                        if(question != null) {
+                            questionContext.deleteQuestion(question.id);
+                        }
                             questionContext.addQuestion({
                                 id: Date.now().toString(),
                                 type: questionContext.type,
                                 question: questionA,
-                                suggestion: suggestion,
+                                suggest: suggestion,
                                 answer: answer,
-                                firstAnswer: firstAnswer,
-                                secondAnswer: secondAnswer,
-                                thirdAnswer: thirdAnswer,
-                                fourthAnswer: fourthAnswer,
+                                selects: [firstAnswer, secondAnswer, thirdAnswer, fourthAnswer]
                             });
                             }}
                 >

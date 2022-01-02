@@ -12,8 +12,8 @@ export default function QuestionItem({item, onTapDeleteIcon, onTapEditIcon}) {
 
     function getContent(type) {
         if(type == 'trac_nghiem') return item.question;
-        else if(type == 'xep_hinh') return item.description;
-        else return item.description;
+        else if(type == 'xep_hinh') return item.desc;
+        else return item.desc;
     }
     return (
         <div className='question-item-container'>

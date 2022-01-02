@@ -65,11 +65,14 @@ export default function ScanContainer({question}) {
                 <Button 
                     variant="contained" 
                     onClick={() => {
+                        if(question != null) {
+                            questionContext.deleteQuestion(question.id)
+                        }
                             questionContext.addQuestion({
                                 id: Date.now().toString(),
                                 type: questionContext.type,
-                                description: description,
-                                suggestion: suggestion,
+                                desc: description,
+                                suggest: suggestion,
                                 correct_answer: answer, 
                             });
                             }}

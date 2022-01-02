@@ -51,11 +51,14 @@ export default function XepHinhContainer({question}) {
                 <Button 
                     variant="contained" 
                     onClick={() => {
+                        if(question != null) {
+                            questionContext.deleteQuestion(question.id)
+                        }
                             questionContext.addQuestion({
                                 id: Date.now().toString(),
                                 type: questionContext.type,
-                                description: description,
-                                imageId: imageId,
+                                desc: description,
+                                image_id: imageId,
                             });
                             }}
                 >
