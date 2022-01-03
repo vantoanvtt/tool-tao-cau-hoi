@@ -6,11 +6,23 @@ import {
     Button,
     } from '@mui/material';
 import QuestionContext from '../context/QuestionContext';
+import {Dialog, DialogTitle, DialogContent,  DialogActions, Typography} from '@mui/material';
+import { styled } from '@mui/material/styles';
+
+const BootstrapDialog = styled(Dialog)(({ theme }) => ({
+    '& .MuiDialogContent-root': {
+      padding: theme.spacing(2),
+    },
+    '& .MuiDialogActions-root': {
+      padding: theme.spacing(1),
+    },
+  }));
 
 export default function ScanContainer({question}) {
     const [description, setDescription] = React.useState(question == null?'': question.description);
     const [suggestion, setSuggestion] = React.useState(question == null?'': question.suggestion);
     const [answer, setAnswer] = React.useState(question == null?'': question.correct_answer);
+    const [openDialog, setOpenDialog] = React.useState(false);
 
     const questionContext = useContext(QuestionContext);
 
@@ -65,20 +77,41 @@ export default function ScanContainer({question}) {
                 <Button 
                     variant="contained" 
                     onClick={() => {
-                        if(question != null) {
-                            questionContext.deleteQuestion(question.id)
+                        if (description == '' || suggestion == '' || answer == '') {
+                            setOpenDialog(true);
+                        } else {
+                            if(question != null) {
+                                questionContext.deleteQuestion(question.id)
+                            }
+                                questionContext.addQuestion({
+                                    id: Date.now().toString(),
+                                    type: questionContext.type,
+                                    desc: description,
+                                    suggest: suggestion,
+                                    correct_answer: answer, 
+                                });
                         }
-                            questionContext.addQuestion({
-                                id: Date.now().toString(),
-                                type: questionContext.type,
-                                desc: description,
-                                suggest: suggestion,
-                                correct_answer: answer, 
-                            });
+                        
                             }}
                 >
                 Tạo câu hỏi
                 </Button>
+                <BootstrapDialog
+                    onClose={() => {setOpenDialog(false)}}
+                    aria-labelledby="customized-dialog-title"
+                    open={openDialog}
+                >
+                    <DialogContent dividers>
+                    <Typography gutterBottom>
+                    Bạn cần nhập đủ trường
+                    </Typography>
+                    </DialogContent>
+                    <DialogActions>
+                    <Button autoFocus onClick={() => {setOpenDialog(false)}}>
+                    Ok
+                    </Button>
+                    </DialogActions>
+                </BootstrapDialog>
 
         </div>
     );

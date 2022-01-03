@@ -12,16 +12,28 @@ import {
     } from '@mui/material';
 import { TabContext, TabList, TabPanel } from '@mui/lab';
 import QuestionContext from '../context/QuestionContext';
+import {Dialog, DialogTitle, DialogContent,  DialogActions, Typography} from '@mui/material';
+import { styled } from '@mui/material/styles';
+
+const BootstrapDialog = styled(Dialog)(({ theme }) => ({
+    '& .MuiDialogContent-root': {
+      padding: theme.spacing(2),
+    },
+    '& .MuiDialogActions-root': {
+      padding: theme.spacing(1),
+    },
+  }));
 
 export default function TracNghiemContainer({question}) {
     const [questionA, setQuestionA] = React.useState(question == null?'': question.question);
     const [suggestion, setSuggestion] = React.useState(question == null?'': question.suggestion);
-    const [answer, setAnswer] = React.useState(question == null? '' : question.answer);
+    const [answer, setAnswer] = React.useState(question == null? 0 : question.answer);
     const [firstAnswer, setFirstAnswer] = React.useState(question == null?'': question.selects[0]);
     const [secondAnswer, setSecondAnswer] = React.useState(question == null?'': question.selects[1]);
     const [thirdAnswer, setThirdAnswer] = React.useState(question == null?'': question.selects[2]);
     const [fourthAnswer, setFourthAnswer] = React.useState(question == null?'': question.selects[3]);
     const [tabIndex, setTabIndex] = React.useState("firstAnswer");
+    const [openDialog, setopenDialog] = React.useState(false);
 
 
     const questionContext = useContext(QuestionContext);
@@ -136,21 +148,42 @@ export default function TracNghiemContainer({question}) {
                 <Button 
                     variant="contained" 
                     onClick={() => {
-                        if(question != null) {
-                            questionContext.deleteQuestion(question.id);
+                        if(question == '' || firstAnswer == '' || secondAnswer == '' || thirdAnswer == ''|| fourthAnswer == '') {
+                            setopenDialog(true);
+                        } else {
+                            if(question != null) {
+                                questionContext.deleteQuestion(question.id);
+                            }
+                                questionContext.addQuestion({
+                                    id: Date.now().toString(),
+                                    type: questionContext.type,
+                                    question: questionA,
+                                    suggest: suggestion,
+                                    answer: answer,
+                                    selects: [firstAnswer, secondAnswer, thirdAnswer, fourthAnswer]
+                                });
                         }
-                            questionContext.addQuestion({
-                                id: Date.now().toString(),
-                                type: questionContext.type,
-                                question: questionA,
-                                suggest: suggestion,
-                                answer: answer,
-                                selects: [firstAnswer, secondAnswer, thirdAnswer, fourthAnswer]
-                            });
+                      
                             }}
                 >
                 Tạo câu hỏi
                 </Button>
+                <BootstrapDialog
+                    onClose={() => {setopenDialog(false)}}
+                    aria-labelledby="customized-dialog-title"
+                    open={openDialog}
+                >
+                    <DialogContent dividers>
+                    <Typography gutterBottom>
+                    Bạn cần nhập đủ trường
+                    </Typography>
+                    </DialogContent>
+                    <DialogActions>
+                    <Button autoFocus onClick={() => {setopenDialog(false)}}>
+                    Ok
+                    </Button>
+                    </DialogActions>
+                </BootstrapDialog>
         </div>
     );
 }

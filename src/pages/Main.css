@@ -27,6 +27,10 @@
     display: flex;
     flex-direction: column;
     padding: 20px;
+    height: 550px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    
 }
 
 .text-field-style {
